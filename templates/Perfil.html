@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projack Impulse - Perfil</title>
+
+  <!-- Fontes externas -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&family=Poetsen+One&family=Quantico&display=swap">
+
+  <!-- CSS local -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/css_perfil/geral.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/css_perfil/botoes.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/css_perfil/imagens.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/css_perfil/esquerda.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/css_perfil/dados.css') }}">
+</head>
+
+<body>
+  <div class="cabecalho">
+    <div class="botoes-acao">
+    <button id="btn-voltar" class="botao-voltar">⬅ Voltar</button>
+    <button id="btn-excluir" class="botao-excluir">🗑 Excluir conta</button>
+    <button id="btn-logout" class="botao-logout">🚪 Logout</button>
+  </div>
+  </div>
+
+  <!-- Container da notificação -->
+  <div id="notificacao-container">
+    <p>Você tem novas notificações!</p>
+  </div>
+
+  <script>
+    const btn = document.getElementById('notificacao-btn');
+    const container = document.getElementById('notificacao-container');
+
+    btn.addEventListener('click', () => {
+      container.style.display = (container.style.display === 'block') ? 'none' : 'block';
+    });
+  </script>
+
+  <!-- retangulo verde lado esquerdo -->
+  <div class="conteudo_esquerda">
+    <img src="{{ url_for('static', filename='imagens/imagens_perfil/logo.png') }}" alt="logo" class="logo"/>
+    <img src="{{ url_for('static', filename='imagens/imagens_perfil/janela_clipe.png') }}" alt="janela com foto e clipe" class="janela_clipe"/>
+    <p class="idealizador">Idealizador<br/></p>
+
+    <!-- Menu -->
+    <div class="info_menu1">
+      <a class="menu1" href="#">
+        <img src="{{ url_for('static', filename='imagens/imagens_perfil/meu_perfil.png') }}" alt="logo" class="icon"/>
+        <span>Meu Perfil<br/></span>
+      </a>
+    </div>
+    <div class="info_menu2">
+      <a class="menu2" id="link-projetos">
+        <img src="{{ url_for('static', filename='imagens/imagens_perfil/meus_projetos.png') }}" alt="logo" class="icon"/>
+        <span>Meus Projetos</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Conteúdo -->
+  <img src="{{ url_for('static', filename='imagens/imagens_perfil/perfil.png') }}" alt="perfil" class="perfil"/>
+  <img src="{{ url_for('static', filename='imagens/imagens_perfil/info_basicas.png') }}" alt="info_basicas" class="info_basicas"/>
+  <img src="{{ url_for('static', filename='imagens/imagens_perfil/contatos.png') }}" alt="contatos" class="contatos"/>
+  <img src="{{ url_for('static', filename='imagens/imagens_perfil/habilidades.png') }}" alt="habilidades" class="habilidades"/>
+
+  <!-- Informações do usuário -->
+  <div class="card_nome_funcao">
+    <p class="nome"></p>
+    <p class="funcao"></p>
+  </div>
+  <div class="card_pais_cidade">
+    <p class="pais"></p>
+    <p class="cidade"></p>
+  </div>
+  <div class="card_sobre_mim">
+    <p class="sobre_mim"></p>
+  </div>
+  <div class="card_contatos1">
+    <p class="telefone"></p>
+    <p class="linkedin"></p>
+  </div>
+  <div class="card_contatos2">
+    <p class="email"></p>
+    <p class="github"></p>
+  </div>
+
+  <div class="card_habilidades">
+    <div class="habilidades-lista" id="habilidades-lista"></div>
+    <button type="button" class="add-habilidade" id="add-habilidade">+ Adicionar</button>
+  </div>
+
+  <img id="editarPerfilBtn" src="{{ url_for('static', filename='imagens/imagens_perfil/editar.png') }}" alt="Editar Perfil" class="img-botao-editar">
+
+  <div id="modal-edicao" class="modal">
+    <div class="modal-content">
+      <h2>Editar Perfil</h2>
+      <label>Nome:</label><input type="text" id="edit-nome">
+      <label>Função:</label><input type="text" id="edit-funcao">
+      <label>País:</label><input type="text" id="edit-pais">
+      <label>Cidade:</label><input type="text" id="edit-cidade">
+      <label>Sobre mim:</label><textarea id="edit-sobre"></textarea>
+      <label>Telefone:</label><input type="text" id="edit-telefone">
+      <label>LinkedIn:</label><input type="text" id="edit-linkedin">
+      <label>Email:</label><input type="text" id="edit-email">
+      <label>GitHub:</label><input type="text" id="edit-github">
+
+      <div class="modal-buttons">
+        <button id="salvar-edicao">Salvar</button>
+        <button id="cancelar-edicao">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔹 JS -->
+  <script src="{{ url_for('static', filename='js/js_perfil/modal_edicao.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/js_perfil/habilidades.js') }}"></script>
+
+  <!-- 🔹 Carregar dados do perfil -->
+  <script>
+  async function carregarPerfil() {
+    const id = window.location.pathname.split("/").pop();
+
+    if (!id) {
+      alert("Usuário não encontrado. Faça login novamente.");
+      window.location.href = "/login";
+      return;
+    }
+
+    try {
+      const resp = await fetch(`https://microidealizador.azurewebsites.net/perfil/${id}`);
+      const perfil = await resp.json();
+
+      if (!resp.ok) throw new Error("Erro ao carregar perfil");
+
+      document.querySelector(".nome").textContent = perfil.nome;
+      document.querySelector(".funcao").textContent = perfil.funcao;
+      document.querySelector(".pais").textContent = perfil.pais;
+      document.querySelector(".cidade").textContent = perfil.cidade;
+      document.querySelector(".sobre_mim").textContent = perfil.sobre_mim;
+      document.querySelector(".telefone").textContent = perfil.telefone;
+      document.querySelector(".linkedin").textContent = perfil.linkedin;
+      document.querySelector(".email").textContent = perfil.email;
+      document.querySelector(".github").textContent = perfil.github;
+
+      // 🔹 Define o link dos projetos com o ID correto
+      document.getElementById("link-projetos").href = `/projetos/${id}`;
+
+      // Habilidades são carregadas separadamente via habilidades.js
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao conectar ao servidor.");
+    }
+  }
+
+  carregarPerfil();
+  </script>
+
+   <!-- 🔹 BOTÕES DE VOLTAR E EXCLUIR PERFIL -->
+   
+   <script>
+  // 🔹 Botão "Voltar"
+  document.getElementById("btn-voltar").addEventListener("click", () => {
+    // Se houver uma página anterior no histórico, volta
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      // Caso o usuário tenha vindo direto (sem histórico), redireciona manualmente
+      window.location.href = "/login";
+    }
+  });
+
+  // 🔹 Botão "Excluir conta"
+  document.getElementById("btn-excluir").addEventListener("click", async () => {
+    const id = window.location.pathname.split("/").pop(); // pega o ID do usuário atual
+
+    if (confirm("Tem certeza que deseja excluir sua conta? Essa ação não pode ser desfeita.")) {
+      try {
+        // Envia apenas uma requisição para deletar tudo
+        const resposta = await fetch(`https://microidealizador.azurewebsites.net/perfil/${id}`, {
+          method: "DELETE",
+        });
+
+        const data = await resposta.json();
+
+        if (!resposta.ok) throw new Error(data.detail || "Erro ao excluir conta.");
+
+        alert(data.mensagem);
+        window.location.href = "/login"; // Redireciona para login
+      } catch (err) {
+        console.error(err);
+        alert("Erro ao excluir conta. Tente novamente mais tarde.");
+      }
+    }
+  });
+
+  // -------------------------
+  // Botão Logout
+  // -------------------------
+  const btnLogout = document.getElementById("btn-logout");
+  if (btnLogout) {
+    btnLogout.addEventListener("click", () => {
+      const confirmLogout = confirm("Deseja realmente sair da sua conta?");
+      if (!confirmLogout) return;
+
+      // Limpa local/session storage (onde você salva idUsuario)
+      try {
+        localStorage.removeItem("idUsuario");
+        // se quiser limpar tudo:
+        // localStorage.clear();
+        sessionStorage.clear();
+      } catch (err) {
+        console.warn("Erro limpando storage:", err);
+      }
+
+      // redireciona para a página de login (rota do Flask)
+      window.location.href = "/login";
+    });
+  }
+
+</script>
+
+
+</body>
+</html>

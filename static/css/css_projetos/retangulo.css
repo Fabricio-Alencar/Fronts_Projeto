@@ -1,0 +1,119 @@
+/* ===========
+   PAINEL LATERAL / RETÂNGULO
+   =========== */
+
+.retangulo {
+  display: none; /* começa oculta */
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 19%;
+  height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    #02432D 0%,   /* cor de cima */
+    #02432D 25%,  /* até a metade */
+    #003221 25%,  /* muda exatamente no meio */
+    #003221 100%  /* cor de baixo */
+  )
+  ;  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  padding: 10px;
+  z-index: 999;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* ====================
+   IMAGENS DENTRO DO PAINEL
+   ==================== */
+
+/* Todas as imagens do painel */
+.retangulo img {
+  display: block;          /* remove espaços extras */
+  margin-left: auto;       /* centraliza horizontalmente */
+  margin-right: auto;
+  width: 80%;              /* largura relativa ao painel */
+  height: auto;            /* mantém proporção da imagem */
+  margin-bottom: 20px;     /* espaçamento abaixo da imagem */
+  object-fit: contain;     /* evita distorção da imagem */
+}
+
+/* Logo principal */
+.retangulo .logo {
+  width: 80%;             /* ocupa toda largura disponível do painel */
+  height: auto;            /* mantém proporção */
+  margin-bottom: -80px;    /* ajuste visual específico */
+  object-fit: contain;     /* mantém proporção */
+}
+
+/* Bloco com clipe */
+.retangulo .Bloco_com_clipe {
+  width: 75%;              /* ocupa 90% da largura do painel */
+  height: auto;            /* mantém proporção */
+  margin-bottom: 0px;      /* sem espaço extra abaixo */
+  object-fit: contain;     /* evita distorção */
+}
+
+/* ====================
+   TEXTO "IDEALIZADOR"
+   ==================== */
+.idealizador-texto {
+  position: relative;      /* permite ajustes relativos */
+  left: 6px;               /* desloca levemente para a direita */
+  color: #fff;             /* cor branca */
+  font-size: 30px;         /* tamanho do texto */
+  text-align: center;      /* centraliza horizontalmente */
+  margin-top: 10px;        /* espaço acima */
+  font-family: 'Quantico', sans-serif; /* fonte personalizada */
+}
+
+/* ====================
+   ITENS DE INFORMAÇÃO (Meus Projetos / Meu Perfil)
+   ==================== */
+.info-item {
+  display: flex;           /* ativa flexbox para alinhar ícone e texto na mesma linha */
+  align-items: center;     /* centraliza verticalmente o ícone com o texto */
+  gap: 10px;               /* espaço entre ícone e texto */
+  color: #fff;             /* cor do texto branca */
+  font-family: 'Quantico', sans-serif; /* fonte personalizada */
+  font-size: 18px;         /* tamanho do texto */
+  margin-bottom: 40px;
+  margin-top: 30px;        /* espaço acima do item */
+  padding-left: 30px;      /* desloca o item para a direita sem quebrar o alinhamento */
+}
+
+/* ====================
+   ÍCONES DENTRO DE CADA ITEM
+   ==================== */
+.info-item .icon {
+  display: block;          /* remove espaços extras ao redor da imagem */
+  width: 50px;             /* largura fixa do ícone */
+  height: 50px;            /* altura fixa do ícone */
+  object-fit: contain;     /* mantém proporção da imagem */
+  margin: 0;               /* remove margens padrão */
+  padding: 0;              /* remove padding padrão */
+}
+
+/* ====================
+   TEXTO DENTRO DE CADA ITEM
+   ==================== */
+.info-item span {
+  line-height: 40px;       /* iguala à altura do ícone, para que o texto fique centralizado verticalmente */
+}
+
+/* ====================
+   LINK DO PERFIL
+   ==================== */
+.info-item.link-perfil {
+  cursor: pointer;         /* muda o cursor para indicar clique */
+  text-decoration: none;   /* remove sublinhado padrão */
+  color: #fff;             /* mantém cor branca */
+}
+
+/* ====================
+   EFEITO AO PASSAR O MOUSE SOBRE O LINK
+   ==================== */
+.info-item.link-perfil:hover {
+  text-decoration: underline; /* sublinha o texto ao passar o mouse */
+}

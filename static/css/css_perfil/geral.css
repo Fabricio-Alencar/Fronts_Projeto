@@ -1,0 +1,46 @@
+/* Estiliza os elementos principais da página (body e html) */
+body, html {
+  width: 100%;                /* Usa toda a largura da tela */
+  height: 100%;               /* Usa toda a altura da tela */
+  font-family: 'Quantico', sans-serif;  /* Define a fonte principal */
+  background-color: #B7D2BD;  /* Cor de fundo da página (verde escuro) */
+  display: flex;              /* Usa flexbox para centralizar o conteúdo */
+  justify-content: center;   /* Centraliza horizontalmente */
+  align-items: center;       /* Centraliza verticalmente */
+}
+
+.cabecalho {
+width: 80%;
+position: fixed;     /* fixa no topo da tela */
+top: 0;              /* encosta no topo */
+right: 0;             /* começa na borda esquerda */  
+background-color: rgba(2, 56, 37, 0.84);
+height: 80px;        /* altura do retângulo */
+z-index: 800;       /* garante que fique acima dos outros elementos */
+}          
+
+.conteudo_esquerda {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    #02432D 0%,   /* cor de cima */
+    #02432D 25%,  /* até a metade */
+    #003221 25%,  /* muda exatamente no meio */
+    #003221 100%  /* cor de baixo */
+  );
+  display: flex;
+  flex-direction: column;  /* empilha verticalmente */
+  align-items: center;     /* centraliza horizontalmente */
+  z-index: 999;
+}
+
+
+
+
+
+
+

@@ -33,6 +33,6 @@ def projeto_detalhes(id_projeto):
 def perfil(id_usuario):
     return render_template('Perfil.html', id_usuario=id_usuario)
 
-if __name__ == "__main__":
-    print("🚀 Servidor Flask rodando em modo DEBUG...")
-    app.run(debug=True)
+#if __name__ == "__main__":
+#    print("🚀 Servidor Flask rodando em modo DEBUG...")
+#    app.run(debug=True)
